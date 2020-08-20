@@ -139,7 +139,7 @@ class Lambdasian {
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
 class Instructor extends Lambdasian {
-  constructor(attributes) {
+  constructor(attributes) { //age, location, name, specialty, favLanguage, catchPhrase
     super(attributes);
     this.specialty = attributes.specialty;
     this.favLanguage = attributes.favLanguage;
@@ -149,7 +149,12 @@ class Instructor extends Lambdasian {
     return `Today we are learning about ${subject}`;
   }
   grade(student, subject) { //student = object
-    return `${student.name} receives a perfect score on ${subject}`;
+    if(student.grade >= 70) { 
+      return `${student.name} receives a perfect score with a ${student.grade} percent on ${subject}`;
+    } else {
+      student.grade = Math.floor(Math.random() * 100 + 1)
+      return `${student.name} receives a below score, need to retake`;
+    }
   }
 }
 
@@ -170,12 +175,14 @@ class Instructor extends Lambdasian {
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
 class Student extends Lambdasian{
-  constructor(attributes) {
+  constructor(attributes) { // age, location, previousBackground, className, favSubjects
     super(attributes);
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects; //array
+    this.grade = 0;
   }
+
   listSubjects() {
     return `Loving ${this.favSubjects}`;
   }
@@ -213,6 +220,30 @@ class ProjectManager extends Instructor{
     return `${this.name} debugs ${student.name}'s code on ${subject}`
   }
 }
+
+// age, location, previousBackground, className, favSubjects
+const micky = new Student({
+  name: 'Micky',
+  location: 'Moon',
+  previousBackground: 'Moonian',
+  className: '2011',
+  favSubject: ['science', 'math', 'javascript', 'react', 'node.js']
+})
+
+//age, location, name, specialty, favLanguage, catchPhrase
+const professor = new Instructor({
+  name: 'Mermaid',
+  location: 'Ocean',
+  age: 32,
+  specialty: 'science',
+  favLanguage: 'javascript',
+  catchPhrase: 'Simplicity is the Ultimate sophisticated'
+})
+
+//grading micky in subject 'science'
+console.log(professor.grade(micky, 'science'));
+
+
 
 
 /*
